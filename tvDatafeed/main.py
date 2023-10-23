@@ -189,6 +189,7 @@ class TvDatafeed:
         self,
         symbol: str,
         exchange: str = "NSE",
+        dividends: bool = False,
         interval: Interval = Interval.in_daily,
         n_bars: int = 10,
         fut_contract: int = None,
@@ -212,6 +213,11 @@ class TvDatafeed:
         )
 
         interval = interval.value
+
+        adjustments = "splits"
+        
+        if (dividends == True):
+            adjustments = "dividends"
 
         self.__create_connection()
 
@@ -261,7 +267,10 @@ class TvDatafeed:
                 "symbol_1",
                 '={"symbol":"'
                 + symbol
-                + '","adjustment":"splits","session":'
+                + '",'
+                + '"adjustment":"'
+                + adjustments
+                + '","session":'
                 + ('"regular"' if not extended_session else '"extended"')
                 + "}",
             ],
