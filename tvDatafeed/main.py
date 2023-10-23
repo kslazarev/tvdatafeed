@@ -190,6 +190,7 @@ class TvDatafeed:
         symbol: str,
         exchange: str = "NSE",
         dividends: bool = False,
+        currency: str = "",
         interval: Interval = Interval.in_daily,
         n_bars: int = 10,
         fut_contract: int = None,
@@ -218,7 +219,7 @@ class TvDatafeed:
         
         if (dividends == True):
             adjustments = "dividends"
-
+            
         self.__create_connection()
 
         self.__send_message("set_auth_token", [self.token])
@@ -259,6 +260,22 @@ class TvDatafeed:
                                   {"flags": ["force_permission"]}]
         )
         self.__send_message("quote_fast_symbols", [self.session, symbol])
+
+        symbol_params = '={"symbol":"'
+            + symbol
+            + '",'
+            + '"adjustment":"'
+            + adjustments
+            + '",',
+
+        if (currency != ""):
+            symbol_params += '"currency-id":"'
+            + currency
+            + '",'
+            
+        symbol_params += '"session":'
+            + ('"regular"' if not extended_session else '"extended"')
+            + "}"
 
         self.__send_message(
             "resolve_symbol",
