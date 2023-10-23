@@ -274,14 +274,7 @@ class TvDatafeed:
             [
                 self.chart_session,
                 "symbol_1",
-                '={"symbol":"'
-                + symbol
-                + '",'
-                + '"adjustment":"'
-                + adjustments
-                + '","session":'
-                + ('"regular"' if not extended_session else '"extended"')
-                + "}",
+                symbol_params,
             ],
         )
         self.__send_message(
