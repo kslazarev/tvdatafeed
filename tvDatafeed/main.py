@@ -195,6 +195,7 @@ class TvDatafeed:
         n_bars: int = 10,
         fut_contract: int = None,
         extended_session: bool = False,
+        backadjustment: bool = False
     ) -> pd.DataFrame:
         """get historical data
 
@@ -264,6 +265,9 @@ class TvDatafeed:
         symbol_params = '={"symbol":"' + symbol + '",'
         symbol_params += '"adjustment":"' + adjustments + '",'
 
+        if (backadjustment == True):
+            symbol_params += '"backadjustment":"default",'
+            
         if (currency != ""):
             symbol_params += '"currency-id":"' + currency + '",'
             
