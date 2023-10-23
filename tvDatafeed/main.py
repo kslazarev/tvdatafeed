@@ -261,21 +261,13 @@ class TvDatafeed:
         )
         self.__send_message("quote_fast_symbols", [self.session, symbol])
 
-        symbol_params = '={"symbol":"'
-            + symbol
-            + '",'
-            + '"adjustment":"'
-            + adjustments
-            + '",',
+        symbol_params = '={"symbol":"' + symbol + '",'
+        symbol_params += '"adjustment":"' + adjustments + '",'
 
         if (currency != ""):
-            symbol_params += '"currency-id":"'
-            + currency
-            + '",'
+            symbol_params += '"currency-id":"' + currency + '",'
             
-        symbol_params += '"session":'
-            + ('"regular"' if not extended_session else '"extended"')
-            + "}"
+        symbol_params += '"session":' + ('"regular"' if not extended_session else '"extended"') + "}"
 
         self.__send_message(
             "resolve_symbol",
